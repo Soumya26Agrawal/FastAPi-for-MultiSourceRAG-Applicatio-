@@ -126,7 +126,7 @@ def upload_pdf(file:UploadFile=File(...)):
     print(len(splits))
     print("---------------------------------------")
     embedding_model = HuggingFaceEmbeddings(
-            model_name="sentence-transformers/all-MiniLM-L6-v2"
+            model_name="sentence-transformers/intfloat/e5-small-v2"
         )
     collection_name= str(uuid.uuid4())+"collection"
     vector_store=Chroma(
@@ -145,7 +145,7 @@ def upload_pdf(file:UploadFile=File(...)):
 @app.post("/pdf-rag")
 def pdfRAG(postBody:PdfRagRequest):
         embedding_model = HuggingFaceEmbeddings(
-            model_name="sentence-transformers/all-MiniLM-L6-v2"
+            model_name="sentence-transformers/intfloat/e5-small-v2"
         )
 
         vector_store=Chroma(
@@ -217,7 +217,7 @@ def web_rag_app(postBody:WebRagRequest1):
     print("--------------------------")
     print(len(splits))
     embedding_model = HuggingFaceEmbeddings(
-            model_name="sentence-transformers/all-MiniLM-L6-v2"
+            model_name="sentence-transformers/intfloat/e5-small-v2"
         )
     collection_name= str(uuid.uuid4())+"collection"
     vector_store=Chroma(
@@ -244,7 +244,7 @@ class WebRagRequest2(BaseModel):
 
 def webQueryRequest(postBody:WebRagRequest2):
     embedding_model = HuggingFaceEmbeddings(
-            model_name="sentence-transformers/all-MiniLM-L6-v2"
+            model_name="sentence-transformers/intfloat/e5-small-v2"
         )
     vector_store=Chroma(
             embedding_function=embedding_model,
@@ -338,7 +338,7 @@ def ytube_rag_app(postBody:YtubeRagPostRequest):
         print("--------------------------")
         print(len(splits))
         embedding_model = HuggingFaceEmbeddings(
-            model_name="sentence-transformers/all-MiniLM-L6-v2"
+            model_name="sentence-transformers/intfloat/e5-small-v2"
         )
 
         vector_store=Chroma(
