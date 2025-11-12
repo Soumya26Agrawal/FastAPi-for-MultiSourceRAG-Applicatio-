@@ -40,18 +40,6 @@ app.add_middleware(
 )
 
 
-embedding_model = HuggingFaceEmbeddings(
-            model_name="sentence-transformers/all-MiniLM-L6-v2"
-        )
-    
-llm_endpoint = HuggingFaceEndpoint(
-        repo_id="deepseek-ai/DeepSeek-R1-0528",
-        task="text-generation",
-        huggingfacehub_api_token=hf_api_key
-        )
-
-chat_model = ChatHuggingFace(llm=llm_endpoint)
-
 prompt = PromptTemplate(
     template="""
 You are an assistant that must answer ONLY using the information in the provided context.
@@ -137,8 +125,9 @@ def upload_pdf(file:UploadFile=File(...)):
     print("The number of chunks are:")
     print(len(splits))
     print("---------------------------------------")
-    
- 
+    embedding_model = HuggingFaceEmbeddings(
+            model_name="sentence-transformers/all-MiniLM-L6-v2"
+        )
     collection_name= str(uuid.uuid4())+"collection"
     vector_store=Chroma(
             embedding_function=embedding_model,
@@ -171,7 +160,14 @@ def pdfRAG(postBody:PdfRagRequest):
 
         for doc in retrived_docs:
             context+=doc.page_content
-        
+            
+        llm_endpoint = HuggingFaceEndpoint(
+        repo_id="mistralai/Mistral-7B-Instruct-v0.2",
+        task="text-generation",
+        huggingfacehub_api_token=hf_api_key
+        )
+
+        chat_model = ChatHuggingFace(llm=llm_endpoint)
         message=prompt.invoke({"context":context,"question":postBody.question})
         output=chat_model.invoke(message)
         print("The fetched chunks from vector stor most related to query")
@@ -247,7 +243,9 @@ class WebRagRequest2(BaseModel):
 @app.post("/web-query")
 
 def webQueryRequest(postBody:WebRagRequest2):
-    
+    embedding_model = HuggingFaceEmbeddings(
+            model_name="sentence-transformers/all-MiniLM-L6-v2"
+        )
     vector_store=Chroma(
             embedding_function=embedding_model,
             persist_directory='chroma_db',
@@ -259,6 +257,14 @@ def webQueryRequest(postBody:WebRagRequest2):
     retrieved_text=""
     for doc in docs:
             retrieved_text+=doc.page_content
+        
+    llm_endpoint = HuggingFaceEndpoint(
+        repo_id="mistralai/Mistral-7B-Instruct-v0.2",
+        task="text-generation",
+        huggingfacehub_api_token=hf_api_key
+        )
+
+    chat_model = ChatHuggingFace(llm=llm_endpoint)
     message=prompt.invoke({"context":retrieved_text,"question":postBody.question})
     output=chat_model.invoke(message)
     print("The fetched chunks from vector stor most related to query")
@@ -358,6 +364,14 @@ def ytube_rag_app(postBody:YtubeRagPostRequest):
         print(len(ids))
           
         docs=retriver.invoke(postBody.question)
+            
+        llm_endpoint = HuggingFaceEndpoint(
+        repo_id="mistralai/Mistral-7B-Instruct-v0.2",
+        task="text-generation",
+        huggingfacehub_api_token=hf_api_key
+        )
+
+        chat_model = ChatHuggingFace(llm=llm_endpoint)
 
         retrieved_text=""
         for doc in docs:
