@@ -14,3 +14,4 @@ langchain-text-splitters
 langchain-chroma
 langchain-experimental
 python-multipart
+youtube-transcript-api
