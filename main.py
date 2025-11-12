@@ -22,7 +22,7 @@ import os
 load_dotenv()
 hf_api_key = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 # from docx import Document   # for Word documents
-from pptx import Presentation  # for PowerPoint files
+# from pptx import Presentation  # for PowerPoint files
 
 import uuid
 # from langchain_unstructured import UnstructuredLoader
