@@ -1,0 +1,7 @@
+langchain-unstructured
+unstructured-client 
+unstructured 
+unstructured[image] 
+unstructured[ocr] 
+unstructured[docx] 
+python-magic

@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+pydantic
+langchain-community
+beautifulsoup4
+python-dotenv
+langchain 
+langchain-huggingface
+huggingface-hub
+chromadb
+sentence-transformers
+pymupdf
+langchain-text-splitters
+langchain-chroma
+langchain-experimental
+python-multipart
