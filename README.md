@@ -20,7 +20,6 @@ The system is strict about grounding: the LLM is instructed to answer **only** f
 
 ## Architecture
 
-## Architecture
 
 ```mermaid
 flowchart TD
